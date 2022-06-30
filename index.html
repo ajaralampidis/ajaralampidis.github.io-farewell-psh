@@ -1,0 +1,77 @@
+<html>
+
+<head>
+    <title> Farewell </title>
+    <link rel="icon" type="image/x-icon" href="/assets/europod.jpeg">
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+</head>
+
+<body>
+    <audio id="audio" preload="metadata" autoplay="true" onPlay="audioVolumeIn(this)" style="visibility: hidden;">
+        <source src="./assets/Gorillaz -Empire-Ants.mp3" type="audio/mpeg">
+    </audio>
+
+    <iframe src="https://github.com/anars/blank-audio/blob/master/250-milliseconds-of-silence.mp3" allow="autoplay"
+        id="audio"></iframe>
+
+    <a-scene>
+        <a-assets>
+            <a-asset-item id="europod" src="./assets/europod.glb"></a-asset-item>
+            <a-asset-item id="psh" src="./assets/psh.glb"></a-asset-item>
+        </a-assets>
+
+
+        <a-entity position="1 1.3 -4" rotation="0 -30 0" gltf-model="#europod" class="europod" castShadow='true'
+            receiveShadow='true'
+            animation="property: position; to: 1 1.5 -4; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate">
+        </a-entity>
+
+
+        <a-entity gltf-model="#psh" class="psh" position="-1 0 -3.5" scale="0.13 0.12 0.12" castShadow='true'
+            receiveShadow='true' rotation="0 30 0">
+        </a-entity>
+
+        <a-entity class="message"
+            text="value:&#60; A pleasure to code with you /&#62;\n  // Agus; font: sourcecodepro; width: 5; wrapCount: 35"
+            position="-3 2.3 -8">
+        </a-entity>
+
+
+        <a-entity environment="preset: starry; lighting: point; groundColor: black;"></a-entity>
+        <a-entity light="color: #fff; type: point; intensity: 0.3" position="-7 9.5 0"></a-entity>
+        <a-entity light="color: #e813b6; type: point; intensity: 0.15" position="5.5 -1 -9.5"></a-entity>
+
+    </a-scene>
+
+</body>
+<script>
+    const europod = document.getElementsByClassName("europod")
+
+
+    document.addEventListener('mousedown', musicPlay);
+    function musicPlay() {
+        document.getElementById('audio').play();
+        document.removeEventListener('mousedown', musicPlay);
+    }
+
+    function audioVolumeIn(q) {
+        if (q.volume) {
+            var InT = 0;
+            var setVolume = 0.3; // Target volume level for new song
+            var speed = 0.002; // Rate of increase
+            q.volume = InT;
+            var eAudio = setInterval(function () {
+                InT += speed;
+                q.volume = InT.toFixed(1);
+                if (InT.toFixed(1) >= setVolume) {
+                    clearInterval(eAudio);
+                    //alert('clearInterval eAudio'+ InT.toFixed(1));
+                };
+            }, 50);
+        };
+    };
+
+</script>
+
+</html>
